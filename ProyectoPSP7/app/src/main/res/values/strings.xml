@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProyectoPSP7</string>
+    <string name="ingreseproyecto">Ingrese el nombre del proyecto</string>
 </resources>
