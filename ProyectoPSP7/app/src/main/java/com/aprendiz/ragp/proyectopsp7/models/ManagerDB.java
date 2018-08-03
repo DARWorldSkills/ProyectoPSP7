@@ -146,7 +146,7 @@ public class ManagerDB {
         openDBWrite();
         ContentValues values = new ContentValues();
         values.put("DATE",cDefectLog.getDate());
-        values.put("START",cDefectLog.getType());
+        values.put("TYPE",cDefectLog.getType());
         values.put("FIXTIME",cDefectLog.getFixtime());
         values.put("PHASEI",cDefectLog.getPhaseI());
         values.put("PHASER",cDefectLog.getPhaseR());
@@ -250,6 +250,72 @@ public class ManagerDB {
         db.delete("PPS","IDPPS=?",parameters);
         closeDB();
     }
+
+
+    public List<Results> consultaDeYuli(int timeP, int proyecto){
+        List<Results> results = new ArrayList<>();
+        openDBrRead();
+        Cursor cursor = db.rawQuery("SELECT PHASE, DELTA FROM TIMELOG WHERE PROJECT ="+proyecto+";",null);
+        if (cursor.moveToFirst()){
+            do {
+                Results tmp = new Results();
+                tmp.setPhase(cursor.getString(0));
+                tmp.setTime(cursor.getInt(1));
+                double p= (tmp.getTime() / timeP)*100;
+                tmp.setPercent((int) p);
+                results.add(tmp);
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        closeDB();
+
+        return results;
+    }
+
+    public List<Results> consultaDeYuli1(int timeP, int proyecto){
+        List<Results> results = new ArrayList<>();
+        openDBrRead();
+        Cursor cursor = db.rawQuery("SELECT PHASEI, DELTA FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
+        if (cursor.moveToFirst()){
+            do {
+                Results tmp = new Results();
+                tmp.setPhase(cursor.getString(0));
+                tmp.setTime(cursor.getInt(1));
+                double p= (tmp.getTime() / timeP)*100;
+                tmp.setPercent((int) p);
+                results.add(tmp);
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        closeDB();
+
+        return results;
+    }
+
+    public List<Results> consultaDeYuli2(int timeP, int proyecto){
+        List<Results> results = new ArrayList<>();
+        openDBrRead();
+        Cursor cursor = db.rawQuery("SELECT PHASER, DELTA FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
+        if (cursor.moveToFirst()){
+            do {
+                Results tmp = new Results();
+                tmp.setPhase(cursor.getString(0));
+                tmp.setTime(cursor.getInt(1));
+                double p= (tmp.getTime() / timeP)*100;
+                tmp.setPercent((int) p);
+                results.add(tmp);
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        closeDB();
+
+        return results;
+    }
+
+
 
 
 

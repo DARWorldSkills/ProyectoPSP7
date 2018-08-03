@@ -1,6 +1,7 @@
 package com.aprendiz.ragp.proyectopsp7.controllers;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -55,12 +56,14 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
+                    limpiarCampo();
                     return true;
                 case R.id.navigation_dashboard:
+                    inputData();
                     return true;
                 case R.id.navigation_notifications:
-
+                    Intent intent = new Intent(DefectLog.this,LDefectLog.class);
+                    startActivity(intent);
                     return true;
 
             }
@@ -83,7 +86,6 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         inicializar();
         CallOnclick();
         ListarSpinners();
-       // validarCampos();
         cronometro();
         limpiarCampo();
 
@@ -342,6 +344,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
                     ManagerDB managerDB = new ManagerDB(DefectLog.this);
                     managerDB.insertDefectLog(cDefectLog);
                     Snackbar.make(contenedor,"Se ha guardado correctamente",Snackbar.LENGTH_SHORT).show();
+                    limpiarCampo();
 
                 }
             });
