@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,9 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.aprendiz.ragp.proyectopsp7.Fragments.FragmentPhaseRemoved;
+import com.aprendiz.ragp.proyectopsp7.Fragments.FragmentPhasel;
+import com.aprendiz.ragp.proyectopsp7.Fragments.FragmentTime;
 import com.aprendiz.ragp.proyectopsp7.R;
 
 public class ProjectPlanSummary extends AppCompatActivity {
@@ -66,6 +70,9 @@ public class ProjectPlanSummary extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
 
     }
 
@@ -87,6 +94,10 @@ public class ProjectPlanSummary extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id== android.R.id.home){
+            Log.i("Action bar", "Atras");
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -141,6 +152,22 @@ public class ProjectPlanSummary extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Fragment fragment;
+            switch (position){
+
+                case 0:
+                    fragment = new FragmentTime();
+                    return fragment;
+
+                case 1:
+                    fragment = new FragmentPhasel();
+                    return fragment;
+
+
+                case 2:
+                    fragment = new FragmentPhaseRemoved();
+                    return fragment;
+            }
             return PlaceholderFragment.newInstance(position + 1);
         }
 
