@@ -28,7 +28,7 @@ public class AdapterDefect extends RecyclerView.Adapter<AdapterDefect.Holder> {
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo,parent);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo,parent,false);
         Holder holder = new Holder(view,mlistener);
         return holder;
     }

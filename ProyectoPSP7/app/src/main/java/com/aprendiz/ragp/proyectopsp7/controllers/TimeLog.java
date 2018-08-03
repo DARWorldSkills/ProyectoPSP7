@@ -51,7 +51,7 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
+                    limpiarCampos();
                     return true;
                 case R.id.navigation_dashboard:
                     inputData();
