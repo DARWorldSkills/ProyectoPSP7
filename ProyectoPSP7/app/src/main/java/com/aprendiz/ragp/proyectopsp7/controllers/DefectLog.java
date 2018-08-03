@@ -90,12 +90,9 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.home:
-                Log.i("Action bar", "Atras");
-                finish();
-
-                break;
+        int id = item.getItemId();
+        if (id == android.R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
