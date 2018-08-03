@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -61,6 +62,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
                 case R.id.navigation_notifications:
 
                     return true;
+
             }
             return false;
         }
@@ -75,12 +77,34 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         inicializar();
         CallOnclick();
         ListarSpinners();
        // validarCampos();
         cronometro();
+        limpiarCampo();
 
+    }
+
+    private void limpiarCampo() {
+        txtfixtime.setText("");
+        txtDate.setText("");
+        txtComments.setText("");
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void cronometro() {

@@ -3,6 +3,8 @@ package com.aprendiz.ragp.proyectopsp7.controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,9 +18,27 @@ public class MenuProyecto extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_proyecto);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         inicializar();
         llamarOnclick();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+
+                Log.i("Action bar", "Atras");
+                finish();
+                return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+        }
     }
 
     private void llamarOnclick() {
