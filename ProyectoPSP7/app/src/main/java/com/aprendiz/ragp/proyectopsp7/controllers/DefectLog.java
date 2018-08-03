@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -44,14 +45,15 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+
                     return true;
+
             }
             return false;
         }
@@ -66,12 +68,37 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         inicializar();
         CallOnclick();
         ListarSpinners();
        // validarCampos();
         cronometro();
+        limpiarCampo();
 
+    }
+
+    private void limpiarCampo() {
+        txtfixtime.setText("");
+        txtDate.setText("");
+        txtComments.setText("");
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.home:
+                Log.i("Action bar", "Atras");
+                finish();
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void cronometro() {

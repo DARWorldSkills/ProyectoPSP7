@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -62,11 +63,27 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         inicializar();
         llamarOnclick();
         ListarPhase();
         validarCampos();
       //  limpiarCampos();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.home:
+                Log.i("Action bar", "Atras");
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void limpiarCampos() {
