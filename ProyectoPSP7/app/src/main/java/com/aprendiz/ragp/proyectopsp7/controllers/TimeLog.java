@@ -66,6 +66,17 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
         llamarOnclick();
         ListarPhase();
         validarCampos();
+      //  limpiarCampos();
+    }
+
+    private void limpiarCampos() {
+        txtHoraFin.setText("");
+        txtHorainicio.setText("");
+        txtComments.setText("");
+        txtDelta.setText("");
+        txtInterrupcion.setText("");
+        btnStop.setEnabled(false);
+
     }
 
     private void validarCampos() {
@@ -130,8 +141,8 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
                 break;
 
             case R.id.btnStop:
-               // CalcularDelta();
-                 HoraFin();
+                HoraFin();
+                CalcularDelta();
 
                 break;
         }
@@ -142,7 +153,7 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
 
         calcularInterrupciones();
         double diferencia = dateStop.getTime() - dateStart.getTime();
-        delta = ((int) (diferencia / 60000))- interrupciones;
+        delta = ((int) (diferencia/ 60000))- interrupciones;
         txtDelta.setText(Integer.toString(delta));
 
 
