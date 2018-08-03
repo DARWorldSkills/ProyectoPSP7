@@ -328,7 +328,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View view = LayoutInflater.from(this).inflate(R.layout.item_mostrar,null);
             builder.setView(view);
-            builder.setTitle("¿Desea ingresar este Time log?");
+            builder.setTitle("¿Desea ingresar este Defect log?");
             TextView txtTodo = view.findViewById(R.id.txtTodo);
             String mensaje = "Date: "+ cDefectLog.getDate()+"\n" +
                     "Type: "+cDefectLog.getType()+"\n"+
