@@ -1,6 +1,7 @@
 package com.aprendiz.ragp.proyectopsp7;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.aprendiz.ragp.proyectopsp7.controllers.MenuProyecto;
 import com.aprendiz.ragp.proyectopsp7.models.AdapterP;
 import com.aprendiz.ragp.proyectopsp7.models.ManagerDB;
 import com.aprendiz.ragp.proyectopsp7.models.Project;
@@ -46,11 +48,19 @@ public class MenuPrincipal extends AppCompatActivity {
                             project.setName(name);
                             managerDB.insertProject(project);
                             Snackbar.make(v,"Se ha agregado correctamente el proyecto",Snackbar.LENGTH_SHORT).show();
+                            inputAdaper();
                         }else{
                             Snackbar.make(v,"Para agregar un proyecto no puede dejar el campo vacio",Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
             }
         });
     }
@@ -72,6 +82,8 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void itemClick(int position) {
                 project = projectList.get(position);
+                Intent intent = new Intent(MenuPrincipal.this,MenuProyecto.class);
+                startActivity(intent);
             }
         });
     }

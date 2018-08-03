@@ -28,7 +28,7 @@ public class AdapterTime extends RecyclerView.Adapter<AdapterTime.Holder> {
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo,parent);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo,parent,false);
         Holder holder = new Holder(view,mlistener);
         return holder;
     }
@@ -40,7 +40,7 @@ public class AdapterTime extends RecyclerView.Adapter<AdapterTime.Holder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return timeLogList.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder {

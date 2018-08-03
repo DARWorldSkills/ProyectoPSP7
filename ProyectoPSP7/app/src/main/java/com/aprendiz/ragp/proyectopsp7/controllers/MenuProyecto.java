@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.aprendiz.ragp.proyectopsp7.R;
 
-public class menu_proyecto extends AppCompatActivity implements View.OnClickListener{
+public class MenuProyecto extends AppCompatActivity implements View.OnClickListener{
 
     Button btnTime, btnDefect, btnPPS;
 
@@ -40,21 +40,21 @@ public class menu_proyecto extends AppCompatActivity implements View.OnClickList
 
             case R.id.btnTimeLog:
 
-                Intent intent = new Intent(menu_proyecto.this, TimeLog.class);
+                Intent intent = new Intent(MenuProyecto.this, TimeLog.class);
                 startActivity(intent);
 
                 break;
 
             case R.id.btnDefectLog:
 
-                Intent intent1 = new Intent(menu_proyecto.this, DefectLog.class);
+                Intent intent1 = new Intent(MenuProyecto.this, DefectLog.class);
                 startActivity(intent1);
 
                 break;
 
             case R.id.btnPlanSummary:
 
-                Intent intent2 = new Intent(menu_proyecto.this, ProjectPlanSummary.class);
+                Intent intent2 = new Intent(MenuProyecto.this, ProjectPlanSummary.class);
                 startActivity(intent2);
 
 

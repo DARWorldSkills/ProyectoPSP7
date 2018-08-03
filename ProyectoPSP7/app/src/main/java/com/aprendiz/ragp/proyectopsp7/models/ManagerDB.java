@@ -62,7 +62,7 @@ public class ManagerDB {
                 cTimeLog.setStop(cursor.getString(4));
                 cTimeLog.setDelta(cursor.getInt(5));
                 cTimeLog.setComments(cursor.getString(6));
-                cTimeLog.setId(cursor.getInt(7));
+                cTimeLog.setProject(cursor.getInt(7));
                 results.add(cTimeLog);
             }while (cursor.moveToNext());
         }

@@ -41,7 +41,7 @@ public class AdapterDefect extends RecyclerView.Adapter<AdapterDefect.Holder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return cDefectLogs.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder {
