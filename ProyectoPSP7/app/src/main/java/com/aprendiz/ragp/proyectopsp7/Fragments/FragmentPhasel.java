@@ -60,7 +60,7 @@ public class FragmentPhasel extends Fragment {
             recyclerView.setHasFixedSize(true);
 
         }else{
-            Snackbar.make(view,"No se ha ingresado el timepo planeado del proyecto",Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(view,"No se ha ingresado el timepo planeado del proyecto",Snackbar.LENGTH_SHORT).show();
         }
 
         return view;

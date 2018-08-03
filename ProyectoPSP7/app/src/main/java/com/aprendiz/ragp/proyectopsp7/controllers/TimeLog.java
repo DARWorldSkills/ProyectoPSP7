@@ -119,6 +119,13 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
             txtHoraFin.setError("Campo Necesario");
         }
 
+        if (delta>=0){
+            validar++;
+        }else {
+            txtDelta.setError("No puede ser negativo");
+
+        }
+
     }
 
     private void ListarPhase() {
@@ -217,7 +224,7 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
 
     public void inputData(){
         validarCampos();
-        if (validar>1) {
+        if (validar>2) {
             final CTimeLog cTimeLog = new CTimeLog();
             cTimeLog.setPhase(spinnerPhase.getSelectedItem().toString());
             cTimeLog.setStart(txtHorainicio.getText().toString());

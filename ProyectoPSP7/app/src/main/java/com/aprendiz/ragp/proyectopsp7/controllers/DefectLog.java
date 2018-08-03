@@ -292,7 +292,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
     private void reiniciarCronometro() {
         bandera1 = false;
         tiempo[0]=0;
-        tiempo[0]=1;
+        tiempo[1]=0;
         txtfixtime.setText("0" + tiempo[1] + ":" + "0" + tiempo[0]);
     }
 
@@ -317,6 +317,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
     public void inputData(){
         validarCampos();
         if (validar>1) {
+            bandera1=false;
             final CDefectLog cDefectLog = new CDefectLog();
             cDefectLog.setDate(txtDate.getText().toString());
             cDefectLog.setType(spinerType.getSelectedItem().toString());
@@ -345,6 +346,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
                     managerDB.insertDefectLog(cDefectLog);
                     Snackbar.make(contenedor,"Se ha guardado correctamente",Snackbar.LENGTH_SHORT).show();
                     limpiarCampo();
+                    reiniciarCronometro();
 
                 }
             });

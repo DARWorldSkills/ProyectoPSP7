@@ -10,6 +10,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -119,11 +120,11 @@
                 <EditText
                     android:id="@+id/txtFixTime"
                     android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     android:enabled="false"
                     android:hint="00:00"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp" />
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/btnGo"
@@ -245,6 +246,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0" />
+
                     <LinearLayout
                         android:id="@+id/linearLayout4"
                         android:layout_width="0dp"
@@ -270,11 +272,7 @@
             </android.support.v7.widget.CardView>
 
 
-
-
-
         </android.support.constraint.ConstraintLayout>
-
 
 
     </android.support.v7.widget.CardView>
