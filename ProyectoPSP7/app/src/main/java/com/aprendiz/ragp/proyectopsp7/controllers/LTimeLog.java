@@ -60,6 +60,7 @@ public class LTimeLog extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 managerDB.deleteTimeLog(cTimeLog);
+                                inputAdapter();
                             }
                         });
 

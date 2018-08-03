@@ -21,6 +21,9 @@
             android:id="@+id/txtNombrePI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/ingreseproyecto" />
+            android:hint="@string/ingreseproyecto"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHighlight="@color/colorPrimaryDark"
+            android:textColorHint="@color/colorPrimaryDark" />
     </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

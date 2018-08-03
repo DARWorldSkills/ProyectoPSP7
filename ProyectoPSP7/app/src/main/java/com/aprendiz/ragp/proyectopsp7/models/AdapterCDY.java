@@ -20,7 +20,7 @@ public class AdapterCDY extends RecyclerView.Adapter<AdapterCDY.Holder>{
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_results,parent,false);
         Holder holder = new Holder(view);
         return holder;
     }
@@ -36,9 +36,9 @@ public class AdapterCDY extends RecyclerView.Adapter<AdapterCDY.Holder>{
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView txtPhase= itemView.findViewById(R.id.txtIdItem);
-        TextView txtTime=itemView.findViewById(R.id.txtNameItem);
-        TextView txtP=itemView.findViewById(R.id.txtDesItem);
+        TextView txtPhase= itemView.findViewById(R.id.txtPhaseItem);
+        TextView txtTime=itemView.findViewById(R.id.txtTime);
+        TextView txtP=itemView.findViewById(R.id.txtRealTime);
         public Holder(View itemView) {
             super(itemView);
         }
@@ -46,7 +46,7 @@ public class AdapterCDY extends RecyclerView.Adapter<AdapterCDY.Holder>{
         public void connectData(Results results){
             txtPhase.setText(results.getPhase());
             txtTime.setText(Integer.toString(results.getTime()));
-            txtP.setText(Integer.toString(results.getTime())+"%");
+            txtP.setText(Integer.toString(results.getPercent())+"%");
         }
     }
 }

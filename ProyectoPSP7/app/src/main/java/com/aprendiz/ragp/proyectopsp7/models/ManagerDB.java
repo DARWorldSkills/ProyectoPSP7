@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.CrossProcessCursor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,8 +212,8 @@ public class ManagerDB {
         openDBWrite();
         ContentValues values = new ContentValues();
         values.put("TIME",cpps.getTime());
-        String[] parameters ={Integer.toString(cpps.getId())};
-        db.update("PPS",values,"IDPPS=?",parameters);
+        String[] parameters ={Integer.toString(cpps.getProject())};
+        db.update("PPS",values,"PROJECT=?",parameters);
         closeDB();
     }
 
@@ -261,7 +262,8 @@ public class ManagerDB {
                 Results tmp = new Results();
                 tmp.setPhase(cursor.getString(0));
                 tmp.setTime(cursor.getInt(1));
-                double p= (tmp.getTime() / timeP)*100;
+                float tmp1= tmp.getTime(), tmp2 = timeP;
+                double p= (tmp1/ tmp2)*100;
                 tmp.setPercent((int) p);
                 results.add(tmp);
 
@@ -282,7 +284,8 @@ public class ManagerDB {
                 Results tmp = new Results();
                 tmp.setPhase(cursor.getString(0));
                 tmp.setTime(cursor.getInt(1));
-                double p= (tmp.getTime() / timeP)*100;
+                float tmp1= tmp.getTime(), tmp2 = timeP;
+                double p= (tmp1/ tmp2)*100;
                 tmp.setPercent((int) p);
                 results.add(tmp);
 
@@ -303,7 +306,8 @@ public class ManagerDB {
                 Results tmp = new Results();
                 tmp.setPhase(cursor.getString(0));
                 tmp.setTime(cursor.getInt(1));
-                double p= (tmp.getTime() / timeP)*100;
+                float tmp1= tmp.getTime(), tmp2 = timeP;
+                double p= (tmp1/ tmp2)*100;
                 tmp.setPercent((int) p);
                 results.add(tmp);
 
