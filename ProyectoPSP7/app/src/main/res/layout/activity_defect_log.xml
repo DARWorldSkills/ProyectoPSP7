@@ -30,11 +30,13 @@
         <EditText
             android:id="@+id/txtFecha"
             android:layout_width="204dp"
+            android:enabled="false"
             android:layout_height="50dp" />
 
         <Button
             android:id="@+id/btnFecha"
             android:layout_width="wrap_content"
+            android:text="..."
             android:layout_height="50dp" />
 
     </LinearLayout>
@@ -89,28 +91,36 @@
             android:text="@string/fixtime"
             android:textColor="#000"
             android:textSize="18sp"
+            android:textAlignment="center"
+            android:hint="00:00"
             android:textStyle="italic" />
 
         <EditText
             android:id="@+id/txtFixTime"
-            android:layout_width="121dp"
+            android:layout_width="114dp"
+            android:enabled="false"
+            android:hint="00:00"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp" />
 
         <Button
             android:id="@+id/btnGo"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_media_play" />
 
         <Button
-            android:id="@+id/btnStop"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content" />
+            android:id="@+id/btnStopD"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_media_pause" />
 
         <Button
             android:id="@+id/btnAgain"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:drawable/checkbox_off_background" />
 
     </LinearLayout>
 
