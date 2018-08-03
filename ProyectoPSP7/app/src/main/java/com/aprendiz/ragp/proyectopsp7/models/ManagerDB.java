@@ -7,7 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ManagerDB {
@@ -278,12 +281,25 @@ public class ManagerDB {
     public List<Results> consultaDeYuli1(int timeP, int proyecto){
         List<Results> results = new ArrayList<>();
         openDBrRead();
-        Cursor cursor = db.rawQuery("SELECT PHASEI, DELTA FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
+        Cursor cursor = db.rawQuery("SELECT PHASEI, FIXTIME FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
         if (cursor.moveToFirst()){
             do {
                 Results tmp = new Results();
                 tmp.setPhase(cursor.getString(0));
-                tmp.setTime(cursor.getInt(1));
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
+                String tiempo= cursor.getString(1);
+                Date minutos = new Date();
+
+                int total=0;
+
+                try {
+                    minutos = formatoDelTexto.parse(tiempo);
+                    total = (int) (minutos.getTime()/60000);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                tmp.setTime(total);
                 float tmp1= tmp.getTime(), tmp2 = timeP;
                 double p= (tmp1/ tmp2)*100;
                 tmp.setPercent((int) p);
@@ -300,12 +316,26 @@ public class ManagerDB {
     public List<Results> consultaDeYuli2(int timeP, int proyecto){
         List<Results> results = new ArrayList<>();
         openDBrRead();
-        Cursor cursor = db.rawQuery("SELECT PHASER, DELTA FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
+        Cursor cursor = db.rawQuery("SELECT PHASER, FIXTIME FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
         if (cursor.moveToFirst()){
             do {
                 Results tmp = new Results();
                 tmp.setPhase(cursor.getString(0));
-                tmp.setTime(cursor.getInt(1));
+
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
+                String tiempo= cursor.getString(1);
+                Date minutos = new Date();
+
+                int total=0;
+
+                try {
+                    minutos = formatoDelTexto.parse(tiempo);
+                    total = (int) (minutos.getTime()/60000);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                tmp.setTime(total);
                 float tmp1= tmp.getTime(), tmp2 = timeP;
                 double p= (tmp1/ tmp2)*100;
                 tmp.setPercent((int) p);
