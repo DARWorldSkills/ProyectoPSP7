@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.CrossProcessCursor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -280,34 +283,45 @@ public class ManagerDB {
 
     public List<Results> consultaDeYuli1(int timeP, int proyecto){
         List<Results> results = new ArrayList<>();
+        Constants.inputPhases();
+        List<String> listPhases = Constants.phases;
+
         openDBrRead();
-        Cursor cursor = db.rawQuery("SELECT PHASEI, FIXTIME FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
-        if (cursor.moveToFirst()){
-            do {
-                Results tmp = new Results();
-                tmp.setPhase(cursor.getString(0));
-                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
-                String tiempo= cursor.getString(1);
-                Date minutos = new Date();
 
-                int total=0;
+        for (int i =0; i<listPhases.size();i++) {
+            Cursor cursor = db.rawQuery("SELECT FIXTIME FROM DEFECTLOG WHERE PROJECT ="+proyecto+" AND PHASEI='"+listPhases.get(i)+"';", null);
+            Date date = new Date();
+            int total = 0;
 
-                try {
-                    minutos = formatoDelTexto.parse(tiempo);
-                    total = (int) (minutos.getTime()/60000);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            if (cursor.moveToFirst()) {
+                do {
 
-                tmp.setTime(total);
-                float tmp1= tmp.getTime(), tmp2 = timeP;
-                double p= (tmp1/ tmp2)*100;
-                tmp.setPercent((int) p);
-                results.add(tmp);
+                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
+                    String tiempo = cursor.getString(0);
 
-            }while (cursor.moveToNext());
+                    try {
+                        date = formatoDelTexto.parse(tiempo);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    total += (int) (date.getSeconds());
+
+                } while (cursor.moveToNext());
+
+            }
+
+            Results tmp = new Results();
+            tmp.setPhase(listPhases.get(i));
+            tmp.setTime(total);
+            float var1 = total, var2 = timeP;
+            float tiempoT = (var1/(var2*60))*100;
+            BigDecimal bigDecimal = new BigDecimal(tiempoT);
+            bigDecimal = bigDecimal.setScale(2,RoundingMode.HALF_UP);
+            tmp.setPercent(bigDecimal.floatValue());
+            results.add(tmp);
+            cursor.close();
         }
-        cursor.close();
         closeDB();
 
         return results;
@@ -316,34 +330,43 @@ public class ManagerDB {
     public List<Results> consultaDeYuli2(int timeP, int proyecto){
         List<Results> results = new ArrayList<>();
         openDBrRead();
-        Cursor cursor = db.rawQuery("SELECT PHASER, FIXTIME FROM DEFECTLOG WHERE PROJECT ="+proyecto+";",null);
-        if (cursor.moveToFirst()){
-            do {
-                Results tmp = new Results();
-                tmp.setPhase(cursor.getString(0));
+        Constants.inputPhases();
+        List<String> listPhases = Constants.phases;
 
-                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
-                String tiempo= cursor.getString(1);
-                Date minutos = new Date();
+        for (int i=0; i<listPhases.size();i++) {
+            Cursor cursor = db.rawQuery("SELECT FIXTIME FROM DEFECTLOG WHERE PROJECT =" + proyecto + " AND PHASER='" + listPhases.get(i) + "';", null);
+            Results tmp = new Results();
+            int total = 0;
+            if (cursor.moveToFirst()) {
+                do {
 
-                int total=0;
+                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
+                    String tiempo = cursor.getString(0);
+                    Date minutos = new Date();
+                    try {
+                        minutos = formatoDelTexto.parse(tiempo);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    total+=minutos.getSeconds();
 
-                try {
-                    minutos = formatoDelTexto.parse(tiempo);
-                    total = (int) (minutos.getTime()/60000);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                } while (cursor.moveToNext());
 
-                tmp.setTime(total);
-                float tmp1= tmp.getTime(), tmp2 = timeP;
-                double p= (tmp1/ tmp2)*100;
-                tmp.setPercent((int) p);
-                results.add(tmp);
+            }
 
-            }while (cursor.moveToNext());
+
+            tmp.setPhase(listPhases.get(i));
+
+            float tmp1 = total, tmp2 = timeP;
+            float p = (tmp1 / (tmp2*60)) * 100;
+            tmp.setTime(total);
+            BigDecimal bigDecimal = new BigDecimal(p);
+            bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+            tmp.setPercent(bigDecimal.floatValue());
+
+            results.add(tmp);
+            cursor.close();
         }
-        cursor.close();
         closeDB();
 
         return results;

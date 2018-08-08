@@ -35,7 +35,8 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
     EditText txtDate, txtfixtime, txtComments;
     Button btnFecha, btnGo, btnStopD, btnAgain;
     Spinner spinerType, spinnerPhaseInject, spinnerPhaseRemoved;
-
+    public static int modo =0;
+    public static DefectLog defectLogC = new DefectLog();
     Thread thread;
     int [] tiempo = {0,0};
 
@@ -59,7 +60,11 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
                     limpiarCampo();
                     return true;
                 case R.id.navigation_dashboard:
-                    inputData();
+                    if (modo==0) {
+                        inputData();
+                    }else {
+                        updateData();
+                    }
                     return true;
                 case R.id.navigation_notifications:
                     Intent intent = new Intent(DefectLog.this,LDefectLog.class);
@@ -70,6 +75,8 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
             return false;
         }
     };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +95,14 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         ListarSpinners();
         cronometro();
         limpiarCampo();
+        if (modo==1){
+            inputVales();
+        }
 
+    }
+
+    private void inputVales() {
+        
     }
 
     private void limpiarCampo() {
@@ -364,6 +378,58 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
             Snackbar.make(contenedor,"Faltan campos por ingresar",Snackbar.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    private void updateData() {
+        validarCampos();
+        if (validar>1) {
+            bandera1=false;
+            final CDefectLog cDefectLog = new CDefectLog();
+            cDefectLog.setDate(txtDate.getText().toString());
+            cDefectLog.setType(spinerType.getSelectedItem().toString());
+            cDefectLog.setFixtime(txtfixtime.getText().toString());
+            cDefectLog.setPhaseI(spinnerPhaseInject.getSelectedItem().toString());
+            cDefectLog.setPhaseR(spinnerPhaseRemoved.getSelectedItem().toString());
+            cDefectLog.setComments(txtComments.getText().toString());
+            cDefectLog.setProject(MenuPrincipal.project.getId());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View view = LayoutInflater.from(this).inflate(R.layout.item_mostrar,null);
+            builder.setView(view);
+            builder.setTitle("¿Desea ingresar este Defect log?");
+            TextView txtTodo = view.findViewById(R.id.txtTodo);
+            String mensaje = "Date: "+ cDefectLog.getDate()+"\n" +
+                    "Type: "+cDefectLog.getType()+"\n"+
+                    "Fixtime: "+cDefectLog.getFixtime()+"\n"+
+                    "Phase Inject: "+cDefectLog.getPhaseI()+"\n"+
+                    "Phase Removed: "+cDefectLog.getPhaseR()+"\n"+
+                    "Comments: "+cDefectLog.getComments()+"\n"+
+                    "Project: "+cDefectLog.getProject()+"\n";
+            txtTodo.setText(mensaje);
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ManagerDB managerDB = new ManagerDB(DefectLog.this);
+                    managerDB.updateDefectLog(cDefectLog);
+                    Snackbar.make(contenedor,"Se ha editado correctamente",Snackbar.LENGTH_SHORT).show();
+                    limpiarCampo();
+                    reiniciarCronometro();
+
+                }
+            });
+
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            builder.show();
+
+        }else {
+            Snackbar.make(contenedor,"Faltan campos por ingresar",Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 
