@@ -57,9 +57,9 @@
 
                 <Button
                     android:id="@+id/btnFecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:text="..." />
+                    android:layout_width="40dp"
+                    android:background="@drawable/sz"
+                    android:layout_height="38dp" />
 
             </LinearLayout>
 

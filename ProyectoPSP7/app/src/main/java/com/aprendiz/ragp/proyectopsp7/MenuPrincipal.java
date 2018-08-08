@@ -33,9 +33,9 @@ public class MenuPrincipal extends AppCompatActivity {
         btnInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                View view = LayoutInflater.from(MenuPrincipal.this).inflate(R.layout.alertd_agregarp,null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MenuPrincipal.this);
                 builder.setTitle("Agregar Proyecto");
+                View view = LayoutInflater.from(MenuPrincipal.this).inflate(R.layout.alertd_agregarp,null);
                 builder.setView(view);
                 final EditText txtNombre = view.findViewById(R.id.txtNombrePI);
                 builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {

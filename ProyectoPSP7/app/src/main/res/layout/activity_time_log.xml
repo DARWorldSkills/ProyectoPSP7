@@ -90,8 +90,9 @@
 
                 <Button
                     android:id="@+id/btnStart"
-                    android:layout_width="56dp"
-                    android:layout_height="50dp" />
+                    android:layout_width="40dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/sz" />
 
 
             </LinearLayout>
@@ -158,8 +159,9 @@
 
                 <Button
                     android:id="@+id/btnStop"
-                    android:layout_width="56dp"
-                    android:layout_height="50dp" />
+                    android:background="@drawable/sz"
+                    android:layout_width="40dp"
+                    android:layout_height="38dp" />
 
 
             </LinearLayout>
