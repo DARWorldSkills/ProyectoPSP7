@@ -46,7 +46,7 @@ public class AdapterCDY extends RecyclerView.Adapter<AdapterCDY.Holder>{
         public void connectData(Results results){
             txtPhase.setText(results.getPhase());
             txtTime.setText(Integer.toString(results.getTime()));
-            txtP.setText(Integer.toString(results.getPercent())+"%");
+            txtP.setText(Float.toString(results.getPercent())+"%");
         }
     }
 }

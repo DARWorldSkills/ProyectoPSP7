@@ -3,7 +3,7 @@ package com.aprendiz.ragp.proyectopsp7.models;
 public class Results {
     private String phase;
     private int time;
-    private int percent;
+    private float percent;
 
     public Results() {
     }
@@ -24,11 +24,11 @@ public class Results {
         this.time = time;
     }
 
-    public int getPercent() {
+    public float getPercent() {
         return percent;
     }
 
-    public void setPercent(int percent) {
+    public void setPercent(float percent) {
         this.percent = percent;
     }
 }
