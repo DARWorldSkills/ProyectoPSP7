@@ -26,7 +26,9 @@ import java.util.List;
  */
 public class FragmentPhasel extends Fragment {
 
-
+    int timeP;
+    ManagerDB managerDB;
+    RecyclerView recyclerView;
     public FragmentPhasel() {
         // Required empty public constructor
     }
@@ -37,11 +39,11 @@ public class FragmentPhasel extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_fragment_phasel, container, false);
-        ManagerDB managerDB = new ManagerDB(getContext());
+        managerDB = new ManagerDB(getContext());
         GestorDB gestorDB = new GestorDB(getContext());
-        int timeP;
+
         SQLiteDatabase db= gestorDB.getReadableDatabase();
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPI);
+        recyclerView = view.findViewById(R.id.recyclerViewPI);
 
         final Cursor cursor = db.rawQuery("SELECT * FROM PPS WHERE PROJECT="+ MenuPrincipal.project.getId()+";",null);
         if (cursor.moveToFirst()){
@@ -53,17 +55,21 @@ public class FragmentPhasel extends Fragment {
         }
 
         if (timeP>0) {
-            List<Results> results = managerDB.consultaDeYuli1(timeP, MenuPrincipal.project.getId());
-            AdapterCDY adapterCDY = new AdapterCDY(results);
-            recyclerView.setAdapter(adapterCDY);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-            recyclerView.setHasFixedSize(true);
+            inputAdapter();
 
         }else{
             //Snackbar.make(view,"No se ha ingresado el timepo planeado del proyecto",Snackbar.LENGTH_SHORT).show();
         }
 
         return view;
+    }
+
+    private void inputAdapter() {
+        List<Results> results = managerDB.consultaDeYuli1(timeP, MenuPrincipal.project.getId());
+        AdapterCDY adapterCDY = new AdapterCDY(results);
+        recyclerView.setAdapter(adapterCDY);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setHasFixedSize(true);
     }
 
 }

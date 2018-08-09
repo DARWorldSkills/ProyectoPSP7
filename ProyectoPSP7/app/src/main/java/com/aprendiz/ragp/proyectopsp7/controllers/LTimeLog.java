@@ -1,6 +1,7 @@
 package com.aprendiz.ragp.proyectopsp7.controllers;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,7 +63,11 @@ public class LTimeLog extends AppCompatActivity {
                 builder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        TimeLog.timelogC=cTimeLog;
+                        TimeLog.modo=1;
+                        Intent intent = new Intent(LTimeLog.this,TimeLog.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
                 builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {

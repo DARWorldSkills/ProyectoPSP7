@@ -66,14 +66,14 @@ public class MenuProyecto extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnDefectLog:
-
+                DefectLog.modo=0;
                 Intent intent1 = new Intent(MenuProyecto.this, DefectLog.class);
                 startActivity(intent1);
 
                 break;
 
             case R.id.btnPlanSummary:
-
+                TimeLog.modo=0;
                 Intent intent2 = new Intent(MenuProyecto.this, ProjectPlanSummary.class);
                 startActivity(intent2);
 
