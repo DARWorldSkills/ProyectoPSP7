@@ -35,13 +35,15 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
     EditText txtHorainicio,txtInterrupcion, txtHoraFin, txtDelta, txtComments ;
     Spinner spinnerPhase;
     Button btnStart, btnStop;
-
+    public static int modo = 0;
+    public static CTimeLog timelogC = new CTimeLog();
     Date dateStart, dateStop;
     int interrupciones = 0;
     int validar=0;
     int delta = 0;
     ConstraintLayout contenedor;
 
+    List<String> phases= new ArrayList<>();
     private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -54,7 +56,11 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
                     limpiarCampos();
                     return true;
                 case R.id.navigation_dashboard:
-                    inputData();
+                    if (modo==0) {
+                        inputData();
+                    }else {
+                        updateData();
+                    }
                     return true;
                 case R.id.navigation_notifications:
                     Intent intent = new Intent(TimeLog.this,LTimeLog.class);
@@ -64,6 +70,8 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
             return false;
         }
     };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,27 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
         inicializar();
         llamarOnclick();
         ListarPhase();
+
+        if (modo==1){
+            inputValues();
+        }
+
+    }
+
+    private void inputValues() {
+        txtDelta.setText(Integer.toString(timelogC.getDelta()));
+        txtHorainicio.setText(timelogC.getStart());
+        txtHoraFin.setText(timelogC.getStop());
+        txtInterrupcion.setText(Integer.toString(timelogC.getInterrupcion()));
+        txtComments.setText(timelogC.getComments());
+
+        for (int i=0; i<phases.size(); i++){
+            if (timelogC.getPhase().equals(phases.get(i))){
+                spinnerPhase.setSelection(i);
+            }
+        }
+
+
 
     }
 
@@ -130,15 +159,15 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
 
     private void ListarPhase() {
 
-        List<String> phase = new ArrayList<>();
-        phase.add(" PLAN");
-        phase.add(" DLD");
-        phase.add(" CODE");
-        phase.add(" COMPILE");
-        phase.add(" UT");
-        phase.add(" PM");
+        phases = new ArrayList<>();
+        phases.add(" PLAN");
+        phases.add(" DLD");
+        phases.add(" CODE");
+        phases.add(" COMPILE");
+        phases.add(" UT");
+        phases.add(" PM");
 
-        ArrayAdapter<String> adapterPhase = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, phase);
+        ArrayAdapter<String> adapterPhase = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, phases);
         spinnerPhase.setAdapter(adapterPhase);
     }
 
@@ -270,4 +299,62 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
         }
 
     }
+
+    private void updateData() {
+        validarCampos();
+        if (validar>2) {
+            final CTimeLog cTimeLog = new CTimeLog();
+            cTimeLog.setId(timelogC.getId());
+            cTimeLog.setPhase(spinnerPhase.getSelectedItem().toString());
+            cTimeLog.setStart(txtHorainicio.getText().toString());
+            cTimeLog.setStop(txtHoraFin.getText().toString());
+            cTimeLog.setDelta(delta);
+            cTimeLog.setInterrupcion(interrupciones);
+            cTimeLog.setComments(txtComments.getText().toString());
+            cTimeLog.setProject(MenuPrincipal.project.getId());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View view = LayoutInflater.from(this).inflate(R.layout.item_mostrar,null);
+            builder.setView(view);
+            builder.setTitle("¿Desea ingresar este Time log?");
+            TextView txtTodo = view.findViewById(R.id.txtTodo);
+            String mensaje = "Phase: "+ cTimeLog.getPhase()+"\n" +
+                    "Start: "+cTimeLog.getStart()+"\n"+
+                    "Interrurcpion: "+cTimeLog.getInterrupcion()+"\n"+
+                    "Stop: "+cTimeLog.getStop()+"\n"+
+                    "Delta: "+cTimeLog.getDelta()+"\n"+
+                    "Comments: "+cTimeLog.getComments()+"\n"+
+                    "Project: "+cTimeLog.getProject()+"\n";
+            txtTodo.setText(mensaje);
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ManagerDB managerDB = new ManagerDB(TimeLog.this);
+                    managerDB.updateTimeLog(cTimeLog);
+                    Snackbar.make(contenedor,"Se ha editado correctamente",Snackbar.LENGTH_SHORT).show();
+                    limpiarCampos();
+                    modo=0;
+                    Intent intent = new Intent(TimeLog.this, LTimeLog.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            builder.show();
+
+        }else {
+            Snackbar.make(contenedor,"Faltan campos por ingresar",Snackbar.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
+
 }

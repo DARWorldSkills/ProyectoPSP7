@@ -203,7 +203,7 @@ public class ManagerDB {
         openDBWrite();
         ContentValues values = new ContentValues();
         values.put("DATE",cDefectLog.getDate());
-        values.put("START",cDefectLog.getType());
+        values.put("TYPE",cDefectLog.getType());
         values.put("FIXTIME",cDefectLog.getFixtime());
         values.put("PHASEI",cDefectLog.getPhaseI());
         values.put("PHASER",cDefectLog.getPhaseR());

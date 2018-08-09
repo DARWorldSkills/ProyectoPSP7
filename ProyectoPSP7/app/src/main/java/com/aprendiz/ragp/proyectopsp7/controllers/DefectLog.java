@@ -36,10 +36,11 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
     Button btnFecha, btnGo, btnStopD, btnAgain;
     Spinner spinerType, spinnerPhaseInject, spinnerPhaseRemoved;
     public static int modo =0;
-    public static DefectLog defectLogC = new DefectLog();
+    public static CDefectLog defectLogC = new CDefectLog();
     Thread thread;
     int [] tiempo = {0,0};
-
+    List<String> typelist= new ArrayList<>();
+    List<String> phases = new ArrayList<>();
     int validar = 0;
     Date dateFecha;
 
@@ -102,7 +103,43 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
     }
 
     private void inputVales() {
-        
+        for (int i =0; i<typelist.size();i++) {
+            try {
+                if (defectLogC.getType().equals(typelist.get(i))) {
+                    spinerType.setSelection(i);
+
+                }
+            }catch (Exception e){
+
+            }
+        }
+
+
+        for (int i =0; i<phases.size();i++) {
+            try {
+                if (defectLogC.getPhaseI().equals(phases.get(i))) {
+                    spinnerPhaseInject.setSelection(i);
+
+                }
+            }catch (Exception e){
+
+            }
+        }
+
+        for (int i =0; i<phases.size();i++) {
+            try {
+                if (defectLogC.getPhaseR().equals(phases.get(i))) {
+                    spinnerPhaseRemoved.setSelection(i);
+
+                }
+            }catch (Exception e){
+
+            }
+        }
+
+        txtfixtime.setText(defectLogC.getFixtime());
+        txtDate.setText(defectLogC.getDate());
+        txtComments.setText(defectLogC.getComments());
     }
 
     private void limpiarCampo() {
@@ -211,18 +248,18 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
 
     private void ListarSpinners() {
 
-        List<String> type = new ArrayList<>();
-        type.add("Documentation");
-        type.add("Syntax");
-        type.add("Build");
-        type.add("Package");
-        type.add("Assigment");
-        type.add("Interface");
-        type.add("Checking");
-        type.add("Data");
-        type.add("Function");
-        type.add("System");
-        type.add("Environment");
+        typelist = new ArrayList<>();
+        typelist.add("Documentation");
+        typelist.add("Syntax");
+        typelist.add("Build");
+        typelist.add("Package");
+        typelist.add("Assigment");
+        typelist.add("Interface");
+        typelist.add("Checking");
+        typelist.add("Data");
+        typelist.add("Function");
+        typelist.add("System");
+        typelist.add("Environment");
         
         List<String> phases = new ArrayList<>();
         phases.add("PLAN");
@@ -232,7 +269,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         phases.add("UT");
         phases.add("PM");
 
-        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, type);
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, typelist);
         ArrayAdapter<String> adapterphases = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, phases);
         
         spinerType.setAdapter(adapterType);
@@ -386,6 +423,7 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
         if (validar>1) {
             bandera1=false;
             final CDefectLog cDefectLog = new CDefectLog();
+            cDefectLog.setId(defectLogC.getId());
             cDefectLog.setDate(txtDate.getText().toString());
             cDefectLog.setType(spinerType.getSelectedItem().toString());
             cDefectLog.setFixtime(txtfixtime.getText().toString());
@@ -414,6 +452,10 @@ public class DefectLog extends AppCompatActivity implements View.OnClickListener
                     Snackbar.make(contenedor,"Se ha editado correctamente",Snackbar.LENGTH_SHORT).show();
                     limpiarCampo();
                     reiniciarCronometro();
+                    modo=0;
+                    Intent intent = new Intent(DefectLog.this, LDefectLog.class);
+                    startActivity(intent);
+                    finish();
 
                 }
             });
