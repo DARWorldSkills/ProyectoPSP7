@@ -29,7 +29,8 @@
         android:ems="10"
         android:hint="Ingrese Tiempo del Proyecto"
         android:inputType="number"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,9 +42,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:text="Guardar"
-        android:textColor="@color/cardview_light_background"
+        android:textColor="@color/amarillo"
         app:layout_constraintBottom_toTopOf="@+id/recyTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtTiempo"

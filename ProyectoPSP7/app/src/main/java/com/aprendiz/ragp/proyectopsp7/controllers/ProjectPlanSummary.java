@@ -109,7 +109,7 @@ public class ProjectPlanSummary extends AppCompatActivity {
         }
 
         /**
-         * Returns a new instance of this fragment for the given section
+         * Returns a hola instance of this fragment for the given section
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {

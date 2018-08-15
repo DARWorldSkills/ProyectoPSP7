@@ -1,7 +1,9 @@
 package com.aprendiz.ragp.proyectopsp7.controllers;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -41,6 +43,7 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
     int interrupciones = 0;
     int validar=0;
     int delta = 0;
+    SharedPreferences sharedPreferences;
     ConstraintLayout contenedor;
 
     List<String> phases= new ArrayList<>();
@@ -192,6 +195,8 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
         btnStop = findViewById(R.id.btnStop);
         contenedor = findViewById(R.id.container);
 
+        sharedPreferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+
     }
 
     @Override
@@ -201,6 +206,8 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
 
             case R.id.btnStart:
                 ObtenerHora();
+                ejecutar();
+                Capturar();
                 btnStop.setEnabled(true);
 
                 break;
@@ -211,6 +218,19 @@ public class TimeLog extends AppCompatActivity implements View.OnClickListener{
 
                 break;
         }
+
+    }
+
+    private void Capturar() {
+
+        txtHorainicio.setText(sharedPreferences.getString("hora", ""));
+    }
+
+    private void ejecutar() {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("hora", txtHorainicio.getText().toString());
+        editor.commit();
 
     }
 
