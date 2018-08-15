@@ -287,41 +287,41 @@ public class ManagerDB {
         List<String> listPhases = Constants.phases;
 
         openDBrRead();
+        int totalDefectos=0;
+
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM DEFECTLOG WHERE PROJECT="+proyecto+" ;",null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                totalDefectos=cursor.getInt(0);
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
 
         for (int i =0; i<listPhases.size();i++) {
-            Cursor cursor = db.rawQuery("SELECT FIXTIME FROM DEFECTLOG WHERE PROJECT ="+proyecto+" AND PHASEI='"+listPhases.get(i)+"';", null);
-            Date date = new Date();
+            Cursor cursorq = db.rawQuery("SELECT count(*) FROM DEFECTLOG WHERE PROJECT ="+proyecto+" AND PHASEI='"+listPhases.get(i)+"';", null);
             int total = 0;
 
-            if (cursor.moveToFirst()) {
+            if (cursorq.moveToFirst()) {
                 do {
-
-                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
-                    String tiempo = cursor.getString(0);
-
-                    try {
-                        date = formatoDelTexto.parse(tiempo);
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    total += (int) (date.getSeconds());
-
-                } while (cursor.moveToNext());
+                    total=cursorq.getInt(0);
+                } while (cursorq.moveToNext());
 
             }
 
             Results tmp = new Results();
             tmp.setPhase(listPhases.get(i));
             tmp.setTime(total);
-            float var1 = total, var2 = timeP;
-            float tiempoT = (var1/(var2*60))*100;
+            float var1 = total, var2 = totalDefectos;
+            float tiempoT = (var1/(var2))*100;
             BigDecimal bigDecimal = new BigDecimal(tiempoT);
             bigDecimal = bigDecimal.setScale(2,RoundingMode.HALF_UP);
             tmp.setPercent(bigDecimal.floatValue());
             results.add(tmp);
-            cursor.close();
+            cursorq.close();
         }
+
         closeDB();
 
         return results;
@@ -333,40 +333,46 @@ public class ManagerDB {
         Constants.inputPhases();
         List<String> listPhases = Constants.phases;
 
+        int totalDefectos=0;
+
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM DEFECTLOG WHERE PROJECT ='"+proyecto+"' ;",null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                totalDefectos=cursor.getInt(0);
+            } while (cursor.moveToNext());
+
+        }
+
+        cursor.close();
         for (int i=0; i<listPhases.size();i++) {
-            Cursor cursor = db.rawQuery("SELECT FIXTIME FROM DEFECTLOG WHERE PROJECT =" + proyecto + " AND PHASER='" + listPhases.get(i) + "';", null);
+            Cursor cursorq = db.rawQuery("SELECT count(*) FROM DEFECTLOG WHERE PROJECT =" + proyecto + " AND PHASER='" + listPhases.get(i) + "';", null);
             Results tmp = new Results();
             int total = 0;
-            if (cursor.moveToFirst()) {
+            if (cursorq.moveToFirst()) {
                 do {
 
-                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("mm:ss");
-                    String tiempo = cursor.getString(0);
-                    Date minutos = new Date();
-                    try {
-                        minutos = formatoDelTexto.parse(tiempo);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    total+=minutos.getSeconds();
+                    total=cursorq.getInt(0);
 
-                } while (cursor.moveToNext());
+                } while (cursorq.moveToNext());
 
             }
 
 
             tmp.setPhase(listPhases.get(i));
 
-            float tmp1 = total, tmp2 = timeP;
-            float p = (tmp1 / (tmp2*60)) * 100;
+            float tmp1 = total, tmp2 = totalDefectos;
+            float p = (tmp1 / (tmp2)) * 100;
             tmp.setTime(total);
             BigDecimal bigDecimal = new BigDecimal(p);
             bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
             tmp.setPercent(bigDecimal.floatValue());
 
             results.add(tmp);
-            cursor.close();
+            cursorq.close();
         }
+
+
         closeDB();
 
         return results;
